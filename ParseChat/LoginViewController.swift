@@ -33,7 +33,7 @@ class LoginViewController: UIViewController {
                 print(error.localizedDescription)
             } else {
                 print("User Registered successfully")
-                // TODO move to chat
+                self.performSegue(withIdentifier: "toChat", sender: nil)
             }
         }
     }
@@ -47,9 +47,12 @@ class LoginViewController: UIViewController {
         PFUser.logInWithUsername(inBackground: username, password: password) { (user: PFUser?, error: Error?) in
             if let error = error {
                 print("User log in failed: \(error.localizedDescription)")
+                let ac = UIAlertController(title: "Login Failed", message: "Incorrect username or password", preferredStyle: .alert)
+                ac.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(ac, animated: true, completion: nil)
             } else {
                 print("User logged in successfully")
-                // TODO move to chat
+                self.performSegue(withIdentifier: "toChat", sender: nil)
             }
         }
     }
